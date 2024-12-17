@@ -1,7 +1,9 @@
+import Login from "./pages/Login";
+import Adminpage from "./pages/Adminpage";
 function App() {
   return (
     <div>
-    <h1>gyvbed gfujedvnde</h1>
+ <Login/>
     </div>
   );
 }
