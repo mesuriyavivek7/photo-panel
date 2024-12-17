@@ -1,7 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Orienta&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playball&family=Playwrite+DK+Loopet+Guides&display=swap');
 
+*{
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+}
 
 body {
   margin: 0;
