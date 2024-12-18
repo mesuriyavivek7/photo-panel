@@ -41,3 +41,28 @@ export const registerUser = async (req, res, next)=>{
          next(err)
      }
 }
+
+
+export const Login = async (req, res, next)=>{
+   try{
+      const {username,password} = req.body
+
+      if(!username || !password) return res.status(400).json({message:"Please provide all required fields."})
+
+      const user = await USERS.findOne({userid:username})
+
+      if(!user) return res.status(404).json({message:"User not found by this userid."})
+       
+      const isPasswordCorrect = await bcryptjs.compare(password,user.password)
+
+      if(!isPasswordCorrect) return res.status(404).json({message:"Password is incorrect."})
+
+      const token = jwt.sign({id:user._id,userType:user.user_type},process.env.JWT)
+
+      const {_id,email,mobileno,user_type,company_name,userid} = user._doc
+      res.cookie("user_data",token,{expires:new Date(Date.now()+2592000000),httpOnly:true,secure:process.env.NODE_ENV === 'production',sameSite:process.env.NODE_ENV === 'production' ? 'none' : 'lax'}).status(200).json({_id,email,user_type,email,mobileno,company_name,userid})
+
+   }catch(err){
+     next(err)
+   }
+}
