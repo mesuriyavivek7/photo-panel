@@ -3,7 +3,7 @@ import Adminpage from "./pages/Adminpage";
 function App() {
   return (
     <div>
-      <Login />
+      <Adminpage />
     </div>
   );
 }
