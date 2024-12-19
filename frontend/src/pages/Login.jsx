@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios'
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
 
 //Importing images
 import IMG1 from '../assets/loginpagemain.jpg';
@@ -11,6 +13,9 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 
 function Login() {
+  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const { loading, error } = useSelector(state => state.auth); 
 
   const [notification,setNotification]=useState(null)
 
@@ -42,14 +47,25 @@ function Login() {
    }
 
   const handleLogin = async (e) => {
+
+    dispatch({type:"USER_FETCH_START"})
+
     e.preventDefault();
     if(validateData()){
         try{
             const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/auth/login`,formData,{withCredentials:true})
-            console.log('data---->',response)
-            showNotification("Successfully login",'success')
+            console.log(response.data)
+            dispatch({type:"LOGIN_SUCCESS",payload:response.data})
+            if(response.data.user_type==="developer"){
+                navigate('/developer')
+            }else if(response.data.user_type==='client'){
+                navigate('/client')
+            }else{
+              navigate('/admin')
+            }
         }catch(err){
            console.log(err)
+           dispatch({type:'LOGIN_FAILURE',payload:err.response.data})
            showNotification(err.response.data.message,'failure')
         }
     }
