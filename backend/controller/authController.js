@@ -66,3 +66,23 @@ export const Login = async (req, res, next)=>{
      next(err)
    }
 }
+
+export const validateUser = async (req, res , next)=>{
+    try{
+      const token = req.cookies.user_data
+       
+      if(!token) return res.status(401).json({message:"No token found."})
+
+      const decoded = jwt.verify(token,process.env.JWT)
+
+      const user = await USERS.findById(decoded.id)
+
+      if(!user) return res.status({message:'User not found.'})
+
+      const {_id,email,mobileno,user_type,company_name,userid} = user._doc
+      res.status(200).json({_id,email,mobileno,user_type,company_name,userid})
+      
+    }catch(err){
+       next(err)
+    }
+}
