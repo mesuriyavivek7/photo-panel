@@ -7,7 +7,7 @@ module.exports = {
     extend: {
       fontFamily: {
         playwrite:["Playball",' cursive;']
-              },
+      },
     },
   },
   plugins: [],

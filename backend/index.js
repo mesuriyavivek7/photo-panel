@@ -19,6 +19,7 @@ const corsOptions={
     origin:(origin,callback)=>{
         const allowedOrigins=[
             "http://localhost:3000",
+            "http://localhost:3001"
         ];
         const isAllowed = allowedOrigins.includes(origin);
         callback(null, isAllowed ? origin : false);

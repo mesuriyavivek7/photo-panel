@@ -13,7 +13,7 @@ import Adminpage from "./pages/Adminpage";
 
 
 function App() {
-   
+
     const {user,loading} = useSelector((state)=>state.auth)
 
     console.log('user---->',user)
@@ -81,6 +81,7 @@ function App() {
         <RouterProvider router={AppRouter}></RouterProvider>
       </div>
     )
+
 }
 
 export default App;
